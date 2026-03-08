@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tuyển Dụng WinMart+ Đồng Bằng Sông Hồng</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(145deg,#fff4e0 0%,#fff9f0 60%,#fff0ec 100%);min-height:100vh;padding:16px 12px}
+.container{max-width:600px;margin:0 auto}
+.card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(240,78,35,0.13),0 1px 4px rgba(0,0,0,0.07);overflow:hidden}
+.card-header{background:linear-gradient(160deg,#f04e23 0%,#e8380d 70%,#d12e0a 100%);color:#fff;padding:0;border-bottom:5px solid #f5c518}
+.card-header-top{display:flex;align-items:center;gap:14px;padding:16px 20px 14px}
+.card-header-logo{background:#fff;border-radius:10px;padding:5px 8px;display:flex;align-items:center;flex-shrink:0;gap:8px}
+.card-header-logo img{display:block}
+.card-header-text h1{font-size:16px;font-weight:700;line-height:1.4;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.15)}
+.card-header-text p{font-size:11.5px;opacity:0.92;margin-top:4px;color:#ffe0b2}
+.card-body{padding:20px 22px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:700;color:#444;margin-bottom:6px}
+.field label .req{color:#e53935;margin-left:2px}
+select,input[type="text"],input[type="tel"],input[type="email"],input[type="date"],textarea{
+  width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;
+  font-size:14px;color:#222;background:#fff;
+  transition:border-color .18s,box-shadow .18s;-webkit-appearance:none;appearance:none
+}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 11px center;padding-right:34px;cursor:pointer
+}
+select:focus,input:focus,textarea:focus{outline:none;border-color:#f04e23;box-shadow:0 0 0 3px rgba(240,78,35,0.11)}
+select:disabled,input:disabled,textarea:disabled{background:#f7f7f7;color:#bbb;cursor:not-allowed;border-color:#ebebeb}
+.radio-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.radio-option{display:flex;align-items:center;gap:6px;padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;cursor:pointer;font-size:13px;transition:all .18s;flex:1;min-width:130px}
+.radio-option:hover{border-color:#1565c0;background:#f0f4ff}
+.radio-option input[type="radio"]{accent-color:#1565c0;width:15px;height:15px;flex-shrink:0}
+.radio-option.selected{border-color:#1565c0;background:#e8f0fe;font-weight:600}
+.err{font-size:11.5px;color:#e53935;margin-top:4px;display:none;font-weight:500}
+.divider{height:1px;background:#f0f0f0;margin:20px 0}
+.section-title{font-size:11px;font-weight:700;color:#d12e0a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #fde6d8}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,#f04e23,#d12e0a);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:6px}
+.submit-btn:hover{opacity:0.92}
+.submit-btn:disabled{background:#ccc;cursor:not-allowed;opacity:1}
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.85);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.loading-overlay.show{display:flex}
+.spinner{width:36px;height:36px;border:4px solid #fde6d8;border-top-color:#f04e23;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.success-card{display:none;text-align:center;padding:40px 24px}
+.success-icon{font-size:52px;margin-bottom:12px}
+.success-title{font-size:20px;font-weight:700;color:#d12e0a;margin-bottom:6px}
+.success-sub{font-size:13px;color:#666;margin-bottom:20px}
+.success-detail{background:#fff8f5;border-radius:10px;padding:16px;text-align:left;font-size:13px}
+.success-detail .row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #fde6d8}
+.success-detail .row:last-child{border:none}
+.success-detail .lbl{color:#888;min-width:130px;font-size:12px;flex-shrink:0}
+.success-detail .val{color:#222;font-weight:600;flex:1}
+.btn-reset{margin-top:18px;padding:10px 28px;background:#f04e23;color:#fff;border:none;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer}
+.helper{font-size:11px;color:#999;margin-top:3px;font-style:italic}
+.field-row{display:flex;gap:12px;margin-bottom:0}
+.field-row .field{flex:1;margin-bottom:16px}
+.field-half{flex:1}
+</style>
+</head>
+<body>
+<div class="container">
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:#555">Đang tải dữ liệu...</div>
+</div>
+
+<div class="card" id="mainCard">
+  <div class="card-header">
+    <div class="card-header-top">
+      <div class="card-header-logo">
+        <img src="winmart-logo.jpg" alt="WinMart+" style="height:36px;width:auto;display:block;border-radius:6px;">
+        <img src="wincommerce-logo.jpg" alt="WinCommerce" style="height:26px;width:auto;display:block;border-radius:4px;">
+      </div>
+      <div class="card-header-text">
+        <h1>TUYỂN DỤNG NHÂN VIÊN<br>WINMART+</h1>
+        <p>Đồng Bằng Sông Hồng — NVBH / Cửa hàng Trưởng</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <form id="mainForm">
+
+      <!-- THÔNG TIN CÁ NHÂN -->
+      <div class="section-title">Thông tin cá nhân</div>
+
+      <div class="field">
+        <label>Họ &amp; Tên <span class="req">*</span></label>
+        <input type="text" id="inputHoTen" placeholder="Nguyễn Văn A">
+        <div class="err" id="errHoTen">❌ Vui lòng nhập họ tên</div>
+      </div>
+
+      <div class="field">
+        <label>Địa Chỉ Email <span class="req">*</span></label>
+        <input type="email" id="inputEmail" placeholder="example@gmail.com">
+        <div class="err" id="errEmail">❌ Vui lòng nhập email hợp lệ</div>
+      </div>
+
+      <div class="field">
+        <label>Số Điện Thoại <span class="req">*</span></label>
+        <input type="tel" id="inputSDT" placeholder="0912345678">
+        <div class="err" id="errSDT">❌ Vui lòng nhập số điện thoại hợp lệ (10 số)</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field field-half">
+          <label>Ngày Tháng Năm Sinh <span class="req">*</span></label>
+          <input type="date" id="inputNgaySinh">
+          <div class="err" id="errNgaySinh">❌ Vui lòng chọn ngày sinh</div>
+        </div>
+        <div class="field field-half">
+          <label>Giới Tính <span class="req">*</span></label>
+          <select id="selGioiTinh">
+            <option value="">— Chọn —</option>
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+            <option value="Khác">Khác</option>
+          </select>
+          <div class="err" id="errGioiTinh">❌ Vui lòng chọn giới tính</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Địa Chỉ Hiện Tại <span class="req">*</span></label>
+        <input type="text" id="inputDiaChi" placeholder="Số nhà, đường, xã/phường, huyện/quận, tỉnh/thành">
+        <div class="err" id="errDiaChi">❌ Vui lòng nhập địa chỉ</div>
+      </div>
+
+      <div class="field">
+        <label>Trình Độ Học Vấn <span class="req">*</span></label>
+        <select id="selHocVan">
+          <option value="">— Chọn trình độ —</option>
+          <option value="Chưa tốt nghiệp THPT">Chưa tốt nghiệp THPT</option>
+          <option value="Tốt nghiệp THPT">Tốt nghiệp THPT</option>
+          <option value="Trung cấp nghề">Trung cấp nghề</option>
+          <option value="Cao đẳng">Cao đẳng</option>
+          <option value="Đại học">Đại học</option>
+          <option value="Sau đại học">Sau đại học</option>
+        </select>
+        <div class="err" id="errHocVan">❌ Vui lòng chọn trình độ học vấn</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- VỊ TRÍ ỨNG TUYỂN -->
+      <div class="section-title">Vị trí &amp; Ca làm việc</div>
+
+      <div class="field">
+        <label>Bạn Đăng Ký Ứng Tuyển Vị Trí Nào? <span class="req">*</span></label>
+        <select id="selViTri">
+          <option value="">— Chọn vị trí —</option>
+          <option value="Nhân viên bán hàng Fulltime (8h/ngày)">NVBH Fulltime (8h/ngày)</option>
+          <option value="Nhân viên bán hàng Parttime (4h/ngày)">NVBH Parttime (4h/ngày)</option>
+          <option value="Cửa hàng phó">Cửa hàng phó (CH Phó)</option>
+          <option value="Cửa hàng trưởng">Cửa hàng trưởng (CHT)</option>
+        </select>
+        <div class="err" id="errViTri">❌ Vui lòng chọn vị trí ứng tuyển</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- KHU VỰC -->
+      <div class="section-title">Khu vực đăng ký làm việc</div>
+
+      <div class="field">
+        <label>Tỉnh <span class="req">*</span></label>
+        <select id="selTinh">
+          <option value="">— Chọn Tỉnh —</option>
+        </select>
+        <div class="err" id="errTinh">❌ Vui lòng chọn tỉnh</div>
+      </div>
+
+      <div class="field">
+        <label>Huyện / Quận <span class="req">*</span></label>
+        <select id="selHuyen" disabled>
+          <option value="">— Chọn Tỉnh trước —</option>
+        </select>
+        <div class="err" id="errHuyen">❌ Vui lòng chọn huyện/quận</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- THÔNG TIN THÊM -->
+      <div class="section-title">Thông tin thêm</div>
+
+      <div class="field">
+        <label>Bạn Biết Thông Tin Công Việc Từ Đâu? <span class="req">*</span></label>
+        <select id="selNguon">
+          <option value="">— Chọn nguồn —</option>
+          <option>Facebook / Mạng xã hội</option>
+          <option>Zalo</option>
+          <option>Người thân / Bạn bè giới thiệu</option>
+          <option>Nhân viên WinMart+ giới thiệu</option>
+          <option>Website tuyển dụng (TopCV, VietnamWorks...)</option>
+          <option>Banner / Tờ rơi tại cửa hàng</option>
+          <option>Khác</option>
+        </select>
+        <div class="err" id="errNguon">❌ Vui lòng chọn nguồn thông tin</div>
+      </div>
+
+      <div class="field">
+        <label>Kinh Nghiệm Làm Việc</label>
+        <textarea id="inputKinhNghiem" rows="3" placeholder="Mô tả kinh nghiệm làm việc (nếu có)..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="btnSubmit">✅ Nộp Đơn Ứng Tuyển</button>
+    </form>
+  </div>
+</div>
+
+<div class="success-card" id="successCard">
+  <div class="success-icon">🎉</div>
+  <div class="success-title">Đã nộp đơn thành công!</div>
+  <div class="success-sub">Cảm ơn bạn đã ứng tuyển! Chúng tôi sẽ liên hệ sớm nhất có thể.</div>
+  <div class="success-detail" id="successDetail"></div>
+  <button class="btn-reset" onclick="resetForm()">➕ Nộp đơn khác</button>
+</div>
+</div>
+
+<script>
+var SHEET_ID = '1fMmEm1GC9aei_3oeu2vcadPVsUM9ms9eVhm99d7pF8A';
+var SHEET_NAME = 'Store_list';
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeW2WtmPzr3GSWUK_NzOW4C3J5Q950Ji2fEswP1kH_HGitUCFJNnr2f00CR4HOFqT-/exec';
+var BTB_TINH = ['TP. Hải Phòng','T. Quảng Ninh','T. Hải Dương','T. Hưng Yên','T. Thái Bình','T. Ninh Bình','T. Hà Nam','T. Nam Định'];
+var TINH_HUYEN = {};
+
+function parseCSV(text){
+  var rows=[],lines=text.split('\n');
+  for(var i=0;i<lines.length;i++){
+    var line=lines[i].trim(); if(!line) continue;
+    var cols=[],cur='',inQ=false;
+    for(var j=0;j<line.length;j++){
+      var c=line[j];
+      if(c==='"') inQ=!inQ;
+      else if(c===','&&!inQ){cols.push(cur.trim());cur='';}
+      else cur+=c;
+    }
+    cols.push(cur.trim()); rows.push(cols);
+  }
+  return rows;
+}
+
+function loadSheetData(){
+  var overlay=document.getElementById('loadingOverlay');
+  overlay.classList.add('show');
+  var url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&sheet='+encodeURIComponent(SHEET_NAME)+'&t='+Date.now();
+  fetch(url,{redirect:'follow'})
+    .then(function(r){ return r.text(); })
+    .then(function(txt){ buildTinhHuyen(txt); overlay.classList.remove('show'); })
+    .catch(function(){ overlay.classList.remove('show'); });
+}
+
+function buildTinhHuyen(csvText){
+  var rows=parseCSV(csvText);
+  if(rows.length<2) return;
+  var h=rows[0];
+  var iTinh=-1,iHuyen=-1;
+  for(var i=0;i<h.length;i++){
+    if(h[i].indexOf('Tỉnh')>=0&&h[i].indexOf('TP')>=0) iTinh=i;
+    if(h[i].indexOf('huy')>=0||h[i].indexOf('Quận')>=0||h[i].indexOf('huyện')>=0) iHuyen=i;
+  }
+  if(iTinh<0||iHuyen<0) return;
+
+  rows.slice(1).forEach(function(r){
+    var tinh=(r[iTinh]||'').trim();
+    var huyen=(r[iHuyen]||'').trim();
+    if(!tinh||!huyen||BTB_TINH.indexOf(tinh)<0) return;
+    if(!TINH_HUYEN[tinh]) TINH_HUYEN[tinh]=new Set();
+    TINH_HUYEN[tinh].add(huyen);
+  });
+
+  var sel=document.getElementById('selTinh');
+  BTB_TINH.forEach(function(t){
+    if(TINH_HUYEN[t]){
+      var opt=document.createElement('option');
+      opt.value=t; opt.textContent=t; sel.appendChild(opt);
+    }
+  });
+}
+
+document.getElementById('selTinh').addEventListener('change',function(){
+  var tinh=this.value;
+  var selH=document.getElementById('selHuyen');
+  selH.innerHTML='<option value="">— Chọn Huyện/Quận —</option>';
+  if(!tinh){selH.disabled=true;return;}
+  var huyens=TINH_HUYEN[tinh]?Array.from(TINH_HUYEN[tinh]).sort(function(a,b){return a.localeCompare(b,'vi');}):[];
+  huyens.forEach(function(hh){
+    var opt=document.createElement('option');
+    opt.value=hh; opt.textContent=hh; selH.appendChild(opt);
+  });
+  selH.disabled=false;
+  document.getElementById('errTinh').style.display='none';
+});
+
+// Radio styling
+document.addEventListener('change',function(e){
+  if(e.target.type==='radio'){
+    var name=e.target.name;
+    document.querySelectorAll('[name="'+name+'"]').forEach(function(x){
+      x.closest('.radio-option').classList.remove('selected');
+    });
+    e.target.closest('.radio-option').classList.add('selected');
+    var errMap={viTri:'errViTri',gioiTinh:'errGioiTinh',hocVan:'errHocVan'};
+    if(errMap[name]) document.getElementById(errMap[name]).style.display='none';
+  }
+});
+
+document.getElementById('mainForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var ok=true;
+  function req(id,errId){
+    var el=document.getElementById(id);
+    var v=(el.value||'').trim();
+    if(!v){document.getElementById(errId).style.display='block';ok=false;}
+    else document.getElementById(errId).style.display='none';
+    return v;
+  }
+  function reqRadio(name,errId){
+    var v=document.querySelector('[name="'+name+'"]:checked');
+    if(!v){document.getElementById(errId).style.display='block';ok=false;}
+    else document.getElementById(errId).style.display='none';
+    return v?v.value:'';
+  }
+
+  var hoTen=req('inputHoTen','errHoTen');
+  var email=document.getElementById('inputEmail').value.trim();
+  if(!email||!/^[^@]+@[^@]+\.[^@]+$/.test(email)){document.getElementById('errEmail').style.display='block';ok=false;}
+  else document.getElementById('errEmail').style.display='none';
+  var sdt=document.getElementById('inputSDT').value.trim();
+  if(!sdt||!/^0\d{9}$/.test(sdt)){document.getElementById('errSDT').style.display='block';ok=false;}
+  else document.getElementById('errSDT').style.display='none';
+  var ngaySinh=req('inputNgaySinh','errNgaySinh');
+  var gioiTinh=req('selGioiTinh','errGioiTinh');
+  var diaChi=req('inputDiaChi','errDiaChi');
+  var hocVan=req('selHocVan','errHocVan');
+  var viTri=req('selViTri','errViTri');
+  var tinh=req('selTinh','errTinh');
+  var huyen=req('selHuyen','errHuyen');
+  var nguon=req('selNguon','errNguon');
+  var kinhNghiem=document.getElementById('inputKinhNghiem').value.trim();
+
+  if(!ok){
+    document.querySelector('.err[style*="block"]').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+
+  var ts=new Date().toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'});
+  var payload={
+    formType:'tuyen-dung-dbsh',
+    thoiGian:ts, hoTen:hoTen, email:email, sdt:sdt,
+    ngaySinh:ngaySinh, gioiTinh:gioiTinh, diaChi:diaChi,
+    hocVan:hocVan, viTri:viTri, tinh:tinh, huyen:huyen,
+    nguon:nguon, kinhNghiem:kinhNghiem
+  };
+
+  document.getElementById('btnSubmit').disabled=true;
+  document.getElementById('btnSubmit').textContent='⏳ Đang gửi...';
+
+  fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).catch(function(){});
+
+  document.getElementById('successDetail').innerHTML=
+    '<div class="row"><span class="lbl">Họ tên</span><span class="val">'+hoTen+'</span></div>'+
+    '<div class="row"><span class="lbl">Email</span><span class="val">'+email+'</span></div>'+
+    '<div class="row"><span class="lbl">Số điện thoại</span><span class="val">'+sdt+'</span></div>'+
+    '<div class="row"><span class="lbl">Vị trí</span><span class="val">'+viTri+'</span></div>'+
+    '<div class="row"><span class="lbl">Khu vực</span><span class="val">'+tinh+' — '+huyen+'</span></div>'+
+    '<div class="row"><span class="lbl">Giới tính</span><span class="val">'+gioiTinh+'</span></div>'+
+    '<div class="row"><span class="lbl">Học vấn</span><span class="val">'+hocVan+'</span></div>';
+  document.getElementById('mainCard').style.display='none';
+  document.getElementById('successCard').style.display='block';
+});
+
+function resetForm(){
+  document.getElementById('mainForm').reset();
+  document.getElementById('selHuyen').innerHTML='<option value="">— Chọn Tỉnh trước —</option>';
+  document.getElementById('selHuyen').disabled=true;
+  document.getElementById('btnSubmit').disabled=false;
+  document.getElementById('btnSubmit').textContent='✅ Nộp Đơn Ứng Tuyển';
+  document.getElementById('mainCard').style.display='block';
+  document.getElementById('successCard').style.display='none';
+}
+
+loadSheetData();
+</script>
+</body>
+</html>
